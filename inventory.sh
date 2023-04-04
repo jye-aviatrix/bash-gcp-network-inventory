@@ -66,4 +66,4 @@ done
 
 echo "Compressing infomration for project: $PROJECT_NAME..."
 zip -r $PROJECT_NAME.zip $PROJECT_NAME/
-echo "$PROJECT_NAME.zip is ready"
+echo "$PWD/$PROJECT_NAME.zip is ready"
