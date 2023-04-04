@@ -33,3 +33,34 @@ my-project
 - Switch to the bash-gcp-network-inventory folder and choose download
 
 ![](20230404114628.png)
+
+# Output Structure
+Each information are exported in two formats: text and JSON. JSON may contain more detailed information, but text is more human readable.
+
+For simplicity, I'm including only txt file in the structure below:
+
+```
+<project>
+  |_ project.txt # Contains Project information such as Project ID
+  |_ ips.txt # Reserved IP or IP ranges information for the entire project. Certain reservation dosn't belong to a VPC, hence placed here
+  |_ target_pools.txt # Load balancer target pools of the project
+  |_ backend_services.txt # Load balancer backend services of the project
+  |_ cloud_routers.txt # Cloud Routers of the project
+  |_ vpn_tunnels.txt # VPN tunnels of the project
+  |_ interconnects.txt # Interconnects of the project
+  |_ vpc.txt # VPCs of the project
+  |_ <vpc1>  # Subfolder of <vpc1>
+    |_ subnets.txt # Subnets of <vpc1>
+    |_ ips.txt  # IP reservations of <vpc1>
+    |_ firewall.txt  # Firewall rules of <vpc1>
+    |_ routes.txt  # Routes of <vpc1>
+    |_ peerings.txt # VPC peerings of <vpc1>
+    |_ private_connections.txt # Private service connections that linked to reserved IP ranges for <vpc1>
+  |_ <vpc2>  # Subfolder of <vpc2>
+    |_ subnets.txt # Subnets of <vpc2>
+    |_ ips.txt  # IP reservations of <vpc2>
+    |_ firewall.txt  # Firewall rules of <vpc2>
+    |_ routes.txt  # Routes of <vpc2>
+    |_ peerings.txt # VPC peerings of <vpc2>
+    |_ private_connections.txt # Private service connections that linked to reserved IP ranges for <vpc2>
+```
