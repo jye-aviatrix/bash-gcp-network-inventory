@@ -48,7 +48,7 @@ For simplicity, I'm including only txt file in the structure below:
   |_ cloud_routers.txt # Cloud Routers of the project
   |_ cloud_routers_<cr-name>_<cr-region>_dynamic_routes.txt  # Dynamic routes learned by Cloud Routers
   |_ vpn_tunnels.txt # VPN tunnels of the project
-  |_ interconnects.txt # Interconnects of the project
+  |_ interconnects.txt # Interconnects attachments of the project
   |_ vpc.txt # VPCs of the project
   |_ <vpc1>  # Subfolder of <vpc1>
     |_ subnets.txt # Subnets of <vpc1>

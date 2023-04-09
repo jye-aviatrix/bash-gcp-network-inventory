@@ -29,8 +29,8 @@ done
 gcloud compute vpn-tunnels list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/vpn_tunnels.json
 gcloud compute vpn-tunnels list --project=$PROJECT_NAME > $PROJECT_NAME/vpn_tunnels.txt
 
-gcloud compute interconnects list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/interconnects.json
-gcloud compute interconnects list --project=$PROJECT_NAME > $PROJECT_NAME/interconnects.txt
+gcloud compute interconnects attachments list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/interconnects.json
+gcloud compute interconnects attachments list --project=$PROJECT_NAME > $PROJECT_NAME/interconnects.txt
 
 echo "Collecting lis of VPCs..."
 gcloud compute networks list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/vpc.json
