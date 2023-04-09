@@ -18,6 +18,11 @@ gcloud compute backend-services list --project=$PROJECT_NAME > $PROJECT_NAME/bac
 
 gcloud compute routers list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/cloud_routers.json
 gcloud compute routers list --project=$PROJECT_NAME > $PROJECT_NAME/cloud_routers.txt
+CLOUD_ROUTERS=$(jq -r '.[] | .name' $PROJECT_NAME/cloud_routers.json)
+for $CLOUD_ROUTER in $CLOUD_ROUTERS
+    QUERY=$(jq -r '.[] | "gcloud compute routers get-status \(.name) --region \(.region | split("/") | last)"' $PROJECT_NAME/cloud_routers.json)
+    $(echo $QUERY --project $PROJECT_NAME) > $PROJECT_NAME/cloud_routers_dynamic_Routes.txt
+done
 
 gcloud compute vpn-tunnels list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/vpn_tunnels.json
 gcloud compute vpn-tunnels list --project=$PROJECT_NAME > $PROJECT_NAME/vpn_tunnels.txt
@@ -50,9 +55,9 @@ do
     gcloud compute firewall-rules list --project=$PROJECT_NAME --filter="network=$VPC" --format=json > $PROJECT_NAME/$VPC/firewall.json
     gcloud compute firewall-rules list --project=$PROJECT_NAME --filter="network=$VPC" > $PROJECT_NAME/$VPC/firewall.txt
 
-    echo "Collecting VPC: $VPC route information..."
-    gcloud compute routes list --project=$PROJECT_NAME --filter="network=$VPC" --format=json > $PROJECT_NAME/$VPC/routes.json
-    gcloud compute routes list --project=$PROJECT_NAME --filter="network=$VPC" > $PROJECT_NAME/$VPC/routes.txt
+    echo "Collecting VPC: $VPC non-dyanmic route information..."
+    gcloud compute routes list --project=$PROJECT_NAME --filter="network=$VPC" --format=json > $PROJECT_NAME/$VPC/non_dynamic_routes.json
+    gcloud compute routes list --project=$PROJECT_NAME --filter="network=$VPC" > $PROJECT_NAME/$VPC/non_dynamic_routes.txt
 
     echo "Collecting VPC: $VPC peering information..."
     gcloud compute networks peerings list --project=$PROJECT_NAME --network=$VPC --format=json > $PROJECT_NAME/$VPC/peerings.json
