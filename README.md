@@ -46,6 +46,7 @@ For simplicity, I'm including only txt file in the structure below:
   |_ target_pools.txt # Load balancer target pools of the project
   |_ backend_services.txt # Load balancer backend services of the project
   |_ cloud_routers.txt # Cloud Routers of the project
+  |_ cloud_routers_<cr-name>_<cr-region>_dynamic_routes.txt  # Dynamic routes learned by Cloud Routers
   |_ vpn_tunnels.txt # VPN tunnels of the project
   |_ interconnects.txt # Interconnects of the project
   |_ vpc.txt # VPCs of the project
@@ -53,14 +54,14 @@ For simplicity, I'm including only txt file in the structure below:
     |_ subnets.txt # Subnets of <vpc1>
     |_ ips.txt  # IP reservations of <vpc1>
     |_ firewall.txt  # Firewall rules of <vpc1>
-    |_ routes.txt  # Routes of <vpc1>
+    |_ non_dynamic_routes.txt  # NON-dynamic Routes of <vpc1>, dynamic routes leared from Cloud Routers is recorded in cloud_routers_<cr-name>_<cr-region>_dynamic_routes.txt
     |_ peerings.txt # VPC peerings of <vpc1>
     |_ private_connections.txt # Private service connections that linked to reserved IP ranges for <vpc1>
   |_ <vpc2>  # Subfolder of <vpc2>
     |_ subnets.txt # Subnets of <vpc2>
     |_ ips.txt  # IP reservations of <vpc2>
     |_ firewall.txt  # Firewall rules of <vpc2>
-    |_ routes.txt  # Routes of <vpc2>
+    |_ non_dynamic_routes.txt  # NON-dyamic Routes of <vpc2>, dynamic routes leared from Cloud Routers is recorded in cloud_routers_<cr-name>_<cr-region>_dynamic_routes.txt
     |_ peerings.txt # VPC peerings of <vpc2>
     |_ private_connections.txt # Private service connections that linked to reserved IP ranges for <vpc2>
 ```

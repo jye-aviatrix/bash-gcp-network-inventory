@@ -18,10 +18,12 @@ gcloud compute backend-services list --project=$PROJECT_NAME > $PROJECT_NAME/bac
 
 gcloud compute routers list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/cloud_routers.json
 gcloud compute routers list --project=$PROJECT_NAME > $PROJECT_NAME/cloud_routers.txt
-CLOUD_ROUTERS=$(jq -r '.[] | .name' $PROJECT_NAME/cloud_routers.json)
-for $CLOUD_ROUTER in $CLOUD_ROUTERS
-    QUERY=$(jq -r '.[] | "gcloud compute routers get-status \(.name) --region \(.region | split("/") | last)"' $PROJECT_NAME/cloud_routers.json)
-    $(echo $QUERY --project $PROJECT_NAME) > $PROJECT_NAME/cloud_routers_dynamic_Routes.txt
+CR_SELFLINKS=$(jq -r '.[] | .selfLink' $PROJECT_NAME/cloud_routers.json)
+for CR_SELFLINK in $CR_SELFLINKS; do
+    CR_NAME=$(jq -r --arg selfLink "$CR_SELFLINK" '.[] | select(.selfLink == $selfLink) | .name' $PROJECT_NAME/cloud_routers.json)
+    CR_REGION=$(jq -r --arg selfLink "$CR_SELFLINK" '.[] | select(.selfLink == $selfLink) | .region | split("/") | last' $PROJECT_NAME/cloud_routers.json)
+    gcloud compute routers get-status $CR_NAME --region $CR_REGION --project=$PROJECT_NAME --format=json > "$PROJECT_NAME/cloud_routers_${CR_NAME}_${CR_REGION}_dynamic_Routes.json"
+    gcloud compute routers get-status $CR_NAME --region $CR_REGION --project=$PROJECT_NAME > "$PROJECT_NAME/cloud_routers_${CR_NAME}_${CR_REGION}_dynamic_Routes.txt"
 done
 
 gcloud compute vpn-tunnels list --project=$PROJECT_NAME --format=json > $PROJECT_NAME/vpn_tunnels.json
